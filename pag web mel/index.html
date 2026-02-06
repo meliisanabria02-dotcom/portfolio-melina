@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aleo Melina · Desarrollo Web</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f3ef;
+    --accent:#9fb3a2;
+    --accent-dark:#7f9a8a;
+    --text:#2f3e35;
+    --white:#ffffff;
+    --soft:#eceae4;
+    --transition:all .4s ease;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    cursor:none!important;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.45;
+}
+
+/* Cursor */
+#magic-cursor{
+    position:fixed;
+    width:7px;
+    height:7px;
+    background:var(--accent-dark);
+    border-radius:50%;
+    z-index:10000;
+}
+#cursor-follower{
+    position:fixed;
+    width:38px;
+    height:38px;
+    border:1px solid var(--accent);
+    border-radius:50%;
+    z-index:9999;
+}
+
+/* Layout */
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 32px;
+}
+
+/* NAV - AJUSTE DE MARGENES */
+nav{
+    padding:40px 0 0px; 
+    display:flex;
+    justify-content:center;
+}
+
+.brand{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0px; 
+}
+
+.logo-mark img{
+    width:190px; 
+    height:auto;
+    display:block;
+    margin-bottom: -15px; 
+}
+
+.logo-text{
+    font-family:'Playfair Display',serif;
+    font-size:1.3rem;
+    letter-spacing:4px;
+    color:var(--text);
+    font-weight: 600;
+    position: relative; 
+    z-index: 2;
+}
+
+/* HERO */
+.hero{
+    padding:30px 0 20px; 
+    text-align:center;
+}
+
+.hero h1{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.9rem,5vw,3rem);
+    line-height:1.15;
+    margin-bottom:12px;
+    /* Evita que el layout salte al escribir */
+    min-height: 2.4em; 
+}
+
+.typing-effect{
+    font-style:italic;
+    color:var(--accent-dark);
+    display: inline-block;
+}
+
+.hero p{
+    max-width:620px;
+    margin:0 auto;
+    font-size:.95rem;
+    color:#5a6b61;
+}
+
+/* PROCESS */
+.process{
+    padding:20px 0 55px;
+}
+
+.process h2{
+    font-family:'Playfair Display',serif;
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.process-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:22px;
+}
+
+.process-card{
+    background:var(--white);
+    padding:26px;
+    border-radius:18px;
+    border:1px solid rgba(0,0,0,.06);
+}
+
+.step{
+    font-family:'Playfair Display',serif;
+    font-size:1.7rem;
+    color:var(--accent-dark);
+    margin-bottom:6px;
+}
+
+.process-card h4{
+    font-size:.95rem;
+    margin-bottom:6px;
+}
+
+.process-card p{
+    font-size:.83rem;
+    color:#666;
+}
+
+/* ACCORDION */
+.pricing{
+    padding:55px 0;
+    border-top:1px solid rgba(0,0,0,.06);
+}
+
+.pricing h2{
+    font-family:'Playfair Display',serif;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.accordion{
+    max-width:700px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.accordion-item{
+    background:var(--white);
+    border-radius:18px;
+    border:1px solid rgba(0,0,0,.06);
+    overflow:hidden;
+}
+
+.accordion-header{
+    padding:22px 26px;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.accordion-header h3{
+    font-size:1rem;
+}
+
+.accordion-header span{
+    font-size:1.2rem;
+    color:var(--accent-dark);
+}
+
+.accordion-content{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+}
+
+.accordion-content p{
+    padding:0 26px 24px;
+    font-size:.88rem;
+    color:#555;
+    line-height:1.6;
+}
+
+.highlight {
+    color: var(--accent-dark);
+    font-weight: 600;
+}
+
+/* FOOTER */
+footer{
+    margin-top:50px;
+    padding:50px 0;
+    background:var(--soft);
+    border-radius:36px 36px 0 0;
+    text-align:center;
+}
+
+.contact-methods{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:22px;
+}
+
+.btn-contact{
+    padding:10px 22px;
+    border-radius:40px;
+    border:1px solid var(--accent-dark);
+    font-size:.7rem;
+    text-decoration:none;
+    transition: var(--transition);
+}
+
+.wa{
+    background:var(--accent-dark);
+    color:white;
+}
+
+.wa:hover{
+    background: var(--text);
+}
+
+.mail{
+    background:white;
+    color:var(--text);
+}
+
+.mail:hover{
+    background: #fdfdfd;
+    border-color: var(--text);
+}
+
+@media(max-width:768px){
+    #magic-cursor,#cursor-follower{display:none;}
+    *{cursor:auto!important;}
+    .logo-mark img{ width: 150px; margin-bottom: -10px; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="magic-cursor"></div>
+<div id="cursor-follower"></div>
+
+<nav class="container">
+    <div class="brand">
+        <div class="logo-mark">
+            <img src="logo.png" alt="Logo Aleo Melina">
+        </div>
+        <div class="logo-text">ALEO MELINA</div>
+    </div>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+    <h1>Interfaces que <br><span id="typewriter" class="typing-effect"></span></h1>
+    <p>Diseño y desarrollo sitios web con cuidado, criterio y atención al detalle.
+Trabajo de forma cercana, escuchando tu idea y acompañándote con recomendaciones claras para que tu web se sienta auténtica y funcional.</p>
+</section>
+
+<section class="process">
+    <h2>Cómo trabajo</h2>
+    <div class="process-grid">
+        <div class="process-card">
+            <div class="step">01</div>
+            <h4>Análisis</h4>
+            <p>Escucho tu idea, entiendo tu proyecto y defino qué tipo de web necesitás y para qué la vas a usar.</p>
+        </div>
+        <div class="process-card">
+            <div class="step">02</div>
+            <h4>Diseño</h4>
+            <p>Diseño una interfaz clara, estética y funcional, cuidando cada detalle visual y la experiencia de quien la visita.</p>
+        </div>
+        <div class="process-card">
+            <div class="step">03</div>
+            <h4>Desarrollo</h4>
+            <p>Construyo el sitio según su complejidad técnica, asegurando que funcione bien en todos los dispositivos.</p>
+        </div>
+        <div class="process-card">
+            <div class="step">04</div>
+            <h4>Lanzamiento</h4>
+            <p>Publicación del sitio, pruebas finales y pequeños ajustes para que todo quede listo.</p>
+        </div>
+    </div>
+</section>
+
+<section class="pricing">
+    <h2>¿Qué tipo de web necesitás?</h2>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>Frontend · Web Estática (Informativa)</h3>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <p>
+                    Es una web enfocada en <span class="highlight">mostrar tu trabajo o marca</span> de forma impecable. <br><br>
+                    ✔ <strong>Cómo funciona:</strong> El contenido es fijo, como una vidriera digital diseñada para cargar rápido y verse bien en cualquier dispositivo.<br>
+                    ✔ <strong>Ideal para:</strong> Portfolios, CVs, marcas personales o Landing Pages.<br>
+                    ✔ <strong>Ventajas:</strong> Mantenimiento mínimo y máxima velocidad.
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>Backend · Web Dinámica (Sistemas)</h3>
+                <span>+</span>
+            </div>
+            <div class="accordion-content">
+                <p>
+                    Es una web con un <span class="highlight">motor interno</span> que procesa información y permite que el usuario interactúe con el sitio.<br><br>
+                    ✔ <strong>Cómo funciona:</strong> Utiliza bases de datos para guardar información (como usuarios, productos o turnos). El sitio cambia según la acción del usuario.<br>
+                    ✔ <strong>Ideal para:</strong> E-commerce, sistemas de gestión, reservas o plataformas con registro de clientes.<br>
+                    ✔ <strong>Nota:</strong> El presupuesto se ajusta a la complejidad de las funciones que necesites crear.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <h2 style="font-family:'Playfair Display',serif;">¿Hablamos?</h2>
+    <div class="contact-methods">
+        <a href="https://wa.me/5491157461066?text=Hola%20Melina!%20Vi%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20consultarte%20por%20un%20proyecto%20web." 
+           class="btn-contact wa" 
+           target="_blank">
+           WHATSAPP
+        </a>
+        
+        <a href="mailto:aleomelina17@gmail.com?subject=Consulta%20sobre%20Desarrollo%20Web%20-%20Aleo%20Melina" 
+           class="btn-contact mail">
+           EMAIL
+        </a>
+    </div>
+    <p style="margin-top:35px;font-size:.65rem;opacity:.5;">© 2026 ALEO MELINA</p>
+</footer>
+
+<script>
+/* Cursor */
+const cursor=document.getElementById("magic-cursor");
+const follower=document.getElementById("cursor-follower");
+document.addEventListener("mousemove",e=>{
+    cursor.style.transform=`translate(${e.clientX-3}px,${e.clientY-3}px)`;
+    follower.style.transform=`translate(${e.clientX-19}px,${e.clientY-19}px)`;
+});
+
+/* Typewriter - FIXED Jump Bug */
+const words=["inspiran calma.","funcionan bien.","se sienten propias."];
+let i=0,j=0,del=false;
+const el=document.getElementById("typewriter");
+
+(function type(){
+    // Si j es 0, usamos un espacio invisible para que la altura no colapse
+    const currentText = words[i].substring(0,j);
+    el.textContent = currentText === "" ? "\u00A0" : currentText;
+    
+    j+=del?-1:1;
+    if(j===words[i].length+1) setTimeout(()=>del=true,1200);
+    if(j===0&&del){del=false;i=(i+1)%words.length;}
+    setTimeout(type,del?40:100);
+})();
+
+/* Accordion */
+document.querySelectorAll(".accordion-header").forEach(header=>{
+    header.addEventListener("click",()=>{
+        const content=header.nextElementSibling;
+        const open=content.style.maxHeight;
+        document.querySelectorAll(".accordion-content").forEach(c=>c.style.maxHeight=null);
+        document.querySelectorAll(".accordion-header span").forEach(s=>s.textContent="+");
+        if(!open){
+            content.style.maxHeight=content.scrollHeight+"px";
+            header.querySelector("span").textContent="−";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
